@@ -111,17 +111,20 @@ class ShowExports():
         self.status_message(status, msg)
 
     def displayexport(self, exp_id):
-        print("Display export with id %d" % int(exp_id))
-        status, msg, reply = self.exportmgr.DisplayExport(exp_id)
-        if status == True:
-           id = reply[0]
-           path = reply[1]
-           pseudo = reply[2]
-           tag = reply[3]
-           clients = reply[4]
-           self.proc_export(id, path, pseudo, tag, clients)
+        if exp_id.isdigit():
+           print("Display export with id %d" % int(exp_id))
+           status, msg, reply = self.exportmgr.DisplayExport(exp_id)
+           if status == True:
+              id = reply[0]
+              path = reply[1]
+              pseudo = reply[2]
+              tag = reply[3]
+              clients = reply[4]
+              self.proc_export(id, path, pseudo, tag, clients)
+           else:
+              self.status_message(status, msg)
         else:
-           self.status_message(status, msg)
+           print("!!Warning!! Wrong input(exportId) provided, accepts only integers accepts only integer 0-N export id's(Example:ganesha_mgr display_export 3")
 
     def proc_export(self, id, path, pseudo, tag, clients):
         print("export %d: path = %s, pseudo = %s, tag = %s" %\
